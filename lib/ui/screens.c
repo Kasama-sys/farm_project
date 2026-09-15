@@ -235,7 +235,7 @@ void create_screen_main() {
             lv_label_set_text_static(obj, "Auto Farm");
         }
         {
-            // Auto_switch
+            // auto_switch
             lv_obj_t *obj = lv_switch_create(parent_obj);
             objects.auto_switch = obj;
             lv_obj_set_pos(obj, 201, 89);
@@ -264,6 +264,53 @@ void create_screen_main() {
             lv_obj_set_pos(obj, 163, 117);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text_static(obj, "Pump Status");
+        }
+        {
+            // tank_noti_main
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.tank_noti_main = obj;
+            lv_obj_set_pos(obj, 37, 34);
+            lv_obj_set_size(obj, 245, 173);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff00cd), LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.obj0 = obj;
+                    lv_obj_set_pos(obj, 89, 0);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text_static(obj, "Alert");
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.obj1 = obj;
+                    lv_obj_set_pos(obj, 20, 58);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text_static(obj, "The water is running out.");
+                }
+                {
+                    // agree_bt_main
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.agree_bt_main = obj;
+                    lv_obj_set_pos(obj, 126, 110);
+                    lv_obj_set_size(obj, 87, 33);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x00ff08), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.obj2 = obj;
+                            lv_obj_set_pos(obj, 0, 0);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text_static(obj, "OK");
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -314,7 +361,7 @@ void create_screen_tank_ui() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj0 = obj;
+                    objects.obj3 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -421,7 +468,7 @@ void create_screen_tank_ui() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj1 = obj;
+                    objects.obj4 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -451,6 +498,53 @@ void create_screen_tank_ui() {
             lv_obj_set_pos(obj, 198, 148);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text_static(obj, "Pump\nStatus");
+        }
+        {
+            // tank_noti_tank
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.tank_noti_tank = obj;
+            lv_obj_set_pos(obj, 37, 34);
+            lv_obj_set_size(obj, 245, 173);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff00cd), LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.obj5 = obj;
+                    lv_obj_set_pos(obj, 89, 0);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text_static(obj, "Alert");
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.obj6 = obj;
+                    lv_obj_set_pos(obj, 20, 58);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text_static(obj, "The water is running out.");
+                }
+                {
+                    // agree_bt_tank
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.agree_bt_tank = obj;
+                    lv_obj_set_pos(obj, 126, 110);
+                    lv_obj_set_size(obj, 87, 33);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x00ff08), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.obj7 = obj;
+                            lv_obj_set_pos(obj, 0, 0);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text_static(obj, "OK");
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -501,7 +595,7 @@ void create_screen_soil_ui() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj2 = obj;
+                    objects.obj8 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -523,7 +617,7 @@ void create_screen_soil_ui() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj3 = obj;
+            objects.obj9 = obj;
             lv_obj_set_pos(obj, 10, 20);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_color(obj, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -551,7 +645,7 @@ void create_screen_soil_ui() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj4 = obj;
+                    objects.obj10 = obj;
                     lv_obj_set_pos(obj, 0, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -563,7 +657,7 @@ void create_screen_soil_ui() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj5 = obj;
+            objects.obj11 = obj;
             lv_obj_set_pos(obj, 10, 72);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -587,7 +681,7 @@ void create_screen_soil_ui() {
                 }
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj6 = obj;
+                    objects.obj12 = obj;
                     lv_obj_set_pos(obj, 1, -4);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -617,7 +711,7 @@ void create_screen_soil_ui() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj7 = obj;
+            objects.obj13 = obj;
             lv_obj_set_pos(obj, 177, 111);
             lv_obj_set_size(obj, 126, 118);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xe0f7ff), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -625,7 +719,7 @@ void create_screen_soil_ui() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj8 = obj;
+                    objects.obj14 = obj;
                     lv_obj_set_pos(obj, 14, 4);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -642,6 +736,53 @@ void create_screen_soil_ui() {
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_38, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_label_set_text_static(obj, "0 %");
+        }
+        {
+            // tank_noti_soil
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.tank_noti_soil = obj;
+            lv_obj_set_pos(obj, 37, 34);
+            lv_obj_set_size(obj, 245, 173);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff00cd), LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.obj15 = obj;
+                    lv_obj_set_pos(obj, 89, 0);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text_static(obj, "Alert");
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.obj16 = obj;
+                    lv_obj_set_pos(obj, 20, 58);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_label_set_text_static(obj, "The water is running out.");
+                }
+                {
+                    // agree_bt_soil
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.agree_bt_soil = obj;
+                    lv_obj_set_pos(obj, 126, 110);
+                    lv_obj_set_size(obj, 87, 33);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0x00ff08), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.obj17 = obj;
+                            lv_obj_set_pos(obj, 0, 0);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_color(obj, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text_static(obj, "OK");
+                        }
+                    }
+                }
+            }
         }
     }
     

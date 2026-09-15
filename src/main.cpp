@@ -106,7 +106,7 @@ int *Turbid = &turbid ;
 #define pinSoil  34
 #define pinLight 13
 
-#define MANUAL_EPOCH_TIME  1789401000UL // epoch
+#define MANUAL_EPOCH_TIME  1789500000UL // epoch
 
 const long gmtOffsetSec = 7 * 3600 ;
 const int  daylightOffsetSec = 0 ;
@@ -168,16 +168,19 @@ void setup()
   //start set up
   Serial.begin(115200);
   pinMode(pump , OUTPUT) ;
+  digitalWrite(pump, HIGH) ;
+
   pinMode(trig , OUTPUT) ;
   pinMode(echo , INPUT) ;
   pinMode(turbid , OUTPUT) ;
 
   pinMode(pinSoil, INPUT);
   pinMode(pinLight, OUTPUT);
+  digitalWrite(pinLight, LOW) ;
 
   dht.begin();
-  Wire.begin(21, 22);      // SDA, SCL
-  lightMeter.begin();
+  // Wire.begin(21, 22);      // SDA, SCL
+  // lightMeter.begin();
   //end set up
 
   // Serial.setDebugOutput(true);
@@ -203,6 +206,12 @@ void setup()
   
   // Init touch device
   touch_init(gfx->width(), gfx->height(), gfx->getRotation());
+  Wire.begin(21, 22);
+  if (!lightMeter.begin(BH1750::CONTINUOUS_HIGH_RES_MODE)) {
+    Serial.println("BH1750 init FAILED");
+  } else {
+    Serial.println("BH1750 init OK");
+  }
 
   lv_init();
 
@@ -274,6 +283,16 @@ void setup()
     ui_init();
 
     //event call back
+    lv_led_off(objects.pump_led_main) ;
+    lv_led_off(objects.pump_led_tank) ;
+    lv_led_off(objects.pump_led_soil) ;
+
+    lv_obj_add_flag(objects.tank_noti_main, LV_OBJ_FLAG_HIDDEN) ;
+    lv_obj_add_flag(objects.tank_noti_tank, LV_OBJ_FLAG_HIDDEN) ;
+    lv_obj_add_flag(objects.tank_noti_soil, LV_OBJ_FLAG_HIDDEN) ;
+
+    lv_obj_clear_state(objects.auto_switch, LV_STATE_CHECKED) ;  // visually match isAutoMode = false at boot
+    
     lv_obj_add_event_cb(objects.tank_page_main , event_handler , LV_EVENT_CLICKED , NULL) ;
     lv_obj_add_event_cb(objects.tank_page_soil , event_handler , LV_EVENT_CLICKED , NULL) ;
     lv_obj_add_event_cb(objects.main_page_tank , event_handler , LV_EVENT_CLICKED , NULL) ;
@@ -281,30 +300,23 @@ void setup()
     lv_obj_add_event_cb(objects.soil_page_tank , event_handler , LV_EVENT_CLICKED , NULL) ;
     lv_obj_add_event_cb(objects.soil_page_main , event_handler , LV_EVENT_CLICKED , NULL) ;
 
+    lv_obj_add_event_cb(objects.agree_bt_main, event_handler, LV_EVENT_CLICKED, NULL) ;
+    lv_obj_add_event_cb(objects.agree_bt_tank, event_handler, LV_EVENT_CLICKED, NULL) ;
+    lv_obj_add_event_cb(objects.agree_bt_soil, event_handler, LV_EVENT_CLICKED, NULL) ;
+
     lv_obj_add_event_cb(objects.pump_on_tank , event_handler , LV_EVENT_CLICKED , Pump/*bag from define*/) ;
     lv_obj_add_event_cb(objects.pump_on_soil , event_handler , LV_EVENT_CLICKED , Pump) ;
     lv_obj_add_event_cb(objects.pump_off_tank , event_handler , LV_EVENT_CLICKED , Pump) ;
     lv_obj_add_event_cb(objects.pump_off_soil , event_handler , LV_EVENT_CLICKED , Pump) ;
 
-    lv_obj_add_event_cb(objects.light_sw_onoff, event_handler, LV_EVENT_VALUE_CHANGED, NULL);
-    lv_obj_add_event_cb(objects.auto_switch, event_handler,LV_EVENT_VALUE_CHANGED,Pump);
+    lv_obj_add_event_cb(objects.light_sw_onoff, event_handler, LV_EVENT_VALUE_CHANGED, &lightPinNum);
+    lv_obj_add_event_cb(objects.auto_switch,    event_handler, LV_EVENT_VALUE_CHANGED, NULL);
 
     lv_timer_create(soil_handler,  1000, &soilpin);
     lv_timer_create(light_handler, 1000, &lightctx);
     lv_timer_create(dht_handler,   2000, &dht);   // DHT22 needs ≥2s between reads
     lv_timer_create(datetime_handler, 1000, NULL) ;
     lv_timer_create(tank_handler , 500 , &tankpin) ;
-    /*lv_obj_add_event_cb(objects.onmotor_bt , event_handler , LV_EVENT_CLICKED , ppump26) ;
-    lv_obj_add_event_cb(objects.offmotor_bt , event_handler , LV_EVENT_CLICKED , ppump26) ;
-    lv_obj_add_event_cb(objects.nextpage_bt , event_handler , LV_EVENT_CLICKED , NULL) ;
-    lv_obj_add_event_cb(objects.home_bt , event_handler , LV_EVENT_CLICKED , NULL) ;
-    lv_obj_add_event_cb(objects.incrementpwm , in_de_spinbox , LV_EVENT_LONG_PRESSED , NULL) ;
-    lv_obj_add_event_cb(objects.decrementpwm , in_de_spinbox , LV_EVENT_LONG_PRESSED , NULL) ;
-    lv_obj_add_event_cb(objects.onpwm_sw , in_de_spinbox , LV_EVENT_VALUE_CHANGED , ppwm22) ;
-    lv_timer_create(fan_on_off , 200 , pfan14) ;
-
-    init_adc_33_34_chart() ;
-    lv_timer_create(update_chart_adc_33_34 , 100 , NULL) ;*/
     //end event call back
 
     Serial.println("Setup done");

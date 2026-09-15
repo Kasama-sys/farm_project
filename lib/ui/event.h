@@ -90,6 +90,7 @@ typedef struct {
 } TankSafety ;
 
 extern TankSafety tankSafety ;
+extern bool isAutoMode ;
 
 #ifdef __cplusplus
 extern "C"
